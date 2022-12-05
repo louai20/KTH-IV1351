@@ -42,11 +42,12 @@ CREATE TABLE "contact_detail_parents"
 
 CREATE TABLE "siblings"
 (
-  "student_id" int NOT NULL REFERENCES "student" ON DELETE CASCADE,
+  "sibling_id" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "student_id" int NOT NULL REFERENCES "student",
   "name" varchar(250),
   "age"  varchar(3),
   "is_student" varchar(100),
-  PRIMARY KEY("student_id")
+  "number_of_siblings" INT
 );
 
 
@@ -92,13 +93,8 @@ CREATE TABLE "contact_detail_parents_email"
 );
 
 
-CREATE TYPE tp AS ENUM ('individual lesson', 'group lesson', 'ensemble');
+CREATE TYPE lesson_type AS ENUM ('individual lesson', 'group lesson', 'ensemble');
 
-CREATE TABLE "lesson_type"
-(
-  "type_id" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  "type" tp
-);
 
 CREATE TYPE tl AS ENUM ('Beginner level', 'Intermediate level', 'Advanced level');
 
@@ -113,7 +109,11 @@ CREATE TABLE "lesson_price"
 (
   "lesson_price_id" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "price" VARCHAR(250),
-  "type_id" int NOT NULL REFERENCES "lesson_type",
+  "genre" VARCHAR(250),
+  "max_number_of_students" INT,
+  "min_number_of_students" INT,
+  "booked_seats" INT,
+  "type" lesson_type,
   "skill_id" int NOT NULL REFERENCES "skill_level"
 ); 
 
@@ -121,7 +121,7 @@ CREATE TABLE "lesson"
 (
   "lesson_id" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   "lesson_price_id" int NOT NULL REFERENCES "lesson_price" ,
-  "duration" timestamp(6),
+  "duration" date,
   "description" varchar(2000) NOT NULL,
   "room_no" varchar(150),
   "instructor_name" varchar(250)
@@ -130,7 +130,7 @@ CREATE TABLE "lesson"
 CREATE TABLE "booking"
 (
   "booking_id" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  "date" date UNIQUE,
+  "date" date ,
   "start_time" time(4),
   "end_time" time(4),
   "place" varchar(250),

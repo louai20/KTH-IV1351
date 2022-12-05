@@ -40,21 +40,21 @@ VALUES
 
 INSERT INTO student (has_a_sibling_student,person_id) 
 VALUES 
-('Sasha Baldwin','1'),
-('Andrew Byrd','2'),
-('','3'),
-('Brock Austin','4'),
-('Megan Whitfield','5'),
-('Maisie Douglas','6'),
-('Oren Blackburn','7'),
-('Omar Burns','8'),
-('Xantha English','9'),
-('Lila Payne','10');
+('YES','1'),
+('YES','2'),
+('NO','3'),
+('YES','4'),
+('YES','5'),
+('YES','6'),
+('YES','7'),
+('YES','8'),
+('YES','9'),
+('YES','10');
 
 INSERT INTO contact_detail_parents (student_id,name) 
 VALUES 
 ('1','Lee Mendez'),
-('2','Chandler Bishop'),
+('2','Wesley Leon'),
 ('3','Mufutau Harmon'),
 ('4','Clare Jimenez'),
 ('5','Yoko Shaffer'),
@@ -64,18 +64,19 @@ VALUES
 ('9','Xerxes Parks'),
 ('10','Richard Baker');
 
-INSERT INTO siblings (student_id,name,age,is_student) 
+INSERT INTO siblings (student_id,name,age,is_student,number_of_siblings) 
 VALUES 
-('1','Wesley Leon','16','Yes'),
-('2','Maris Byrd','11','Yes'),
-('3','','','No'),
-('4','Allistair Mcpherson','12','Yes'),
-('5','Ruth Cline','13','Yes'),
-('6','Ali Kirk','8','Yes'),
-('7','','','No'),
-('8','','','No'),
-('9','','','No'),
-('10','Nehru Stewart','6','Yes');
+('1','Wesley Leon','16','YES','3'),
+('1','Maris Byrd','11','YES','3'),
+('1','Maris FDSA','11','YES','3'),
+('4','Chandler Bishop','17','NO','2'),
+('4','Allistair Mcpherson','12','YES','2'),
+('5','Ruth Cline','13','YES','1'),
+('6','Ali Kirk','8','YES','1'),
+('7','Cora P. RidHle','15','YES','1'),
+('8','Cora Q. RidGle','15','NO','1'),
+('9','Cora GSDA. RiHFSGDle','15','YES','1'),
+('10','Nehru Stewart','6','YES','1');
 
 
 INSERT INTO phone_number (phone_no) 
@@ -155,45 +156,47 @@ VALUES
 ('9','9'),
 ('10','5');
 
-INSERT INTO lesson_type (type)
-VALUES 
-('individual lesson'),('group lesson'),('ensemble');
+
 
 INSERT INTO skill_level (level,student_id)
 VALUES 
 ('Beginner level','1'),('Intermediate level','2'),('Advanced level','3');
 
-INSERT INTO lesson_price (price,type_id,skill_id) 
+INSERT INTO lesson_price (price,genre,max_number_of_students,min_number_of_students,booked_seats,type,skill_id) 
 VALUES
-('100$', (SELECT type_id FROM lesson_type WHERE type='individual lesson'),(SELECT skill_id FROM skill_level WHERE level='Beginner level')),
-('140$', (SELECT type_id FROM lesson_type WHERE type='group lesson'),(SELECT skill_id FROM skill_level WHERE level='Intermediate level')),
-('140$', (SELECT type_id FROM lesson_type WHERE type='ensemble'),(SELECT skill_id FROM skill_level WHERE level='Advanced level'));
+('100$','Classical music','1','1','1','individual lesson',(SELECT skill_id FROM skill_level WHERE level='Beginner level')),
+('100$','Musical music','50','15','7','group lesson',(SELECT skill_id FROM skill_level WHERE level='Intermediate level')),
+('140$','Classical music','150','30','149','ensemble',(SELECT skill_id FROM skill_level WHERE level='Advanced level')),
+('100$','Musical music','1','1','1','individual lesson',(SELECT skill_id FROM skill_level WHERE level='Intermediate level')),
+('140$','Musical music','200','45','200','ensemble',(SELECT skill_id FROM skill_level WHERE level='Advanced level')),
+('140$','Musical music','200','40','50','ensemble',(SELECT skill_id FROM skill_level WHERE level='Advanced level')),
+('140$','Pop rock music','250','50','248','ensemble',(SELECT skill_id FROM skill_level WHERE level='Advanced level'));
 
 INSERT INTO lesson (lesson_price_id,duration,description,room_no,instructor_name)
 VALUES
-('2','2023-06-24 23:03:49','The lesson will be about .....','59','Austin Steele'),
-('1','2022-10-25 01:16:00','The lesson will be about..','106','Mariam Jacobson'),
-('2','2022-04-12 06:49:07','The lesson will be about..','82','Anjolie Shepard'),
-('2','2023-05-21 02:57:02','The lesson will be about..','62','Abraham Hayden'),
-('3','2022-03-30 08:43:34','The lesson will be about..','143','Kareem Knowles'),
-('3','2022-11-28 00:42:55','The lesson will be about..','106','Jasper Curry'),
-('2','2023-02-23 05:46:17','The lesson will be about..','51','Trevor Floyd'),
-('1','2022-01-17 11:51:48','The lesson will be about..','58','Elton Keller'),
-('1','2022-08-18 09:56:21','The lesson will be about...','136','Uriah Washington'),
-('1','2022-09-24 14:16:32','The lesson will be about....','67','Mallory Drake');
+('2','2022-12-07','The lesson will be about .....','59','Austin Steele'),
+('1','2022-12-09','The lesson will be about..','106','Mariam Jacobson'),
+('3','2022-12-08','The lesson will be about..','82','Anjolie Shepard'),
+('4','2022-12-06','The lesson will be about..','62','Abraham Hayden'),
+('3','2022-12-10','The lesson will be about..','143','Kareem Knowles'),
+('3','2022-12-12','The lesson will be about..','106','Jasper Curry'),
+('6','2022-12-14','The lesson will be about..','51','Trevor Floyd'),
+('5','2022-12-15','The lesson will be about..','58','Elton Keller'),
+('6','2022-12-16','The lesson will be about...','136','Uriah Washington'),
+('2','2022-12-16','The lesson will be about....','67','Mallory Drake');
 
 INSERT INTO booking (date,start_time,end_time,place,booking_reference,sibling_discount,instructor_id,student_id,lesson_id,lesson_price_id) 
 VALUES 
-('02/04/2023','14:32:29','17:32:29','4867 Velit. Ave','199-08-0491','$12.64','1','1','2','2'),
-('11/08/2023','13:32:29','16:32:29','Ap #964-8385 Eu, Rd.','689-18-0304','$79.09','2','2','8','1'),
-('07/13/2023','10:32:29','10:32:29','157-4703 Risus. Av.','712-08-0059','$45.65','3','3','7','3'),
-('12/08/2022','10:32:29','10:00:33','115-1414 Et Avenue','','','4','4','4','1'),
-('09/08/2023','17:18:25','05:34:08','P.O. Box 738, 8110 Metus. St.','','','5','5','3','2'),
-('12/21/2022','22:10:52','00:27:09','5901 Aliquet. Rd.','','','6','6','4','1'),
-('01/29/2023','19:46:05','10:35:36','816 Lorem. Rd.','','','7','7','6','3'),
-('08/20/2023','01:22:43','21:46:47','7548 Orci. Av.','','','8','8','6','3'),
-('04/11/2023','15:39:54','12:18:46','P.O. Box 678, 2715 Rhoncus. Rd.','','','9','9','2','2'),
-('03/18/2023','22:39:52','22:23:37','P.O. Box 902, 483 Vel, Rd.','','','10','10','3','2');
+('02/04/2022','14:32:29','17:32:29','4867 Velit. Ave','199-08-0491','$12.64','1','1','2','2'),
+('11/08/2022','13:32:29','16:32:29','Ap #964-8385 Eu, Rd.','689-18-0304','$79.09','2','2','8','1'),
+('07/13/2022','10:32:29','10:32:29','157-4703 Risus. Av.','712-08-0059','$45.65','3','3','7','3'),
+('08/08/2022','10:32:29','10:00:33','115-1414 Et Avenue','','','4','4','4','1'),
+('08/08/2022','17:18:25','05:34:08','P.O. Box 738, 8110 Metus. St.','','','5','5','3','2'),
+('08/21/2022','22:10:52','00:27:09','5901 Aliquet. Rd.','','','6','6','4','1'),
+('08/29/2022','19:46:05','10:35:36','816 Lorem. Rd.','','','8','7','6','3'),
+('08/20/2022','01:22:43','21:46:47','7548 Orci. Av.','','','8','8','6','3'),
+('08/11/2022','15:39:54','12:18:46','P.O. Box 678, 2715 Rhoncus. Rd.','','','8','9','2','2'),
+('08/18/2022','22:39:52','22:23:37','P.O. Box 902, 483 Vel, Rd.','','','10','10','3','2');
 
 INSERT INTO instrument (instrument_type,instrument_ref,rental_fee) 
 VALUES 
