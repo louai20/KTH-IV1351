@@ -12,10 +12,10 @@ CREATE VIEW lesson_per_month_2022 AS
 CREATE VIEW lesson_types_per_month_2022 AS 
     SELECT EXTRACT(MONTH FROM duration) AS month,
     COUNT (*) AS number_of_lessons, 
-    COUNT(CASE lesson_price_id when 1 THEN 1 ELSE NULL END) AS individual_lessons, 
-    COUNT(CASE lesson_price_id when 2 THEN 1 ELSE NULL END) AS group_lessons, 
-    COUNT(CASE lesson_price_id when 3 THEN 1 ELSE NULL END) AS ensemble_lessons
-    FROM lesson
+    COUNT(CASE when (lesson.lesson_price_id=lesson_price.lesson_price_id) AND (lesson_price.type = 'individual lesson')  then 1 ELSE NULL END) AS individual_lessons, 
+    COUNT(CASE when (lesson.lesson_price_id=lesson_price.lesson_price_id) AND (lesson_price.type = 'group lesson') then 1 ELSE NULL END) AS group_lessons, 
+    COUNT(CASE when (lesson.lesson_price_id=lesson_price.lesson_price_id) AND (lesson_price.type = 'ensemble') then 1 ELSE NULL END) AS ensemble_lessons
+    FROM lesson join lesson_price On lesson.lesson_price_id=lesson_price.lesson_price_id
     WHERE EXTRACT(YEAR FROM duration) = '2022'
     GROUP BY month 
     ORDER BY month;
